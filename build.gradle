@@ -1,16 +1,13 @@
 buildscript {
     repositories {
-        maven {
-            url 'https://dl.bintray.com/giancosta86/Hephaestus'
-        }
+        //TODO! Del this!
+        mavenLocal()
 
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
-        classpath 'info.gianlucacosta.moonlicense:moonlicense-gradle:4.3'
-        classpath 'info.gianlucacosta.aurora:aurora:7.0'
+        classpath 'info.gianlucacosta.aurora:aurora:10.0.0-SNAPSHOT'
         classpath 'com.github.maiflai:gradle-scalatest:0.12'
     }
 }
@@ -19,38 +16,29 @@ buildscript {
 apply plugin: 'scala'
 apply plugin: 'antlr'
 apply plugin: 'maven'
-apply plugin: 'com.jfrog.bintray'
 apply plugin: 'osgi'
 apply plugin: 'com.github.maiflai.scalatest'
-apply plugin: 'info.gianlucacosta.moonlicense'
 apply plugin: 'info.gianlucacosta.aurora'
-
 
 
 group = 'info.gianlucacosta.lambdaprism'
 archivesBaseName = 'lambdaprism'
-version = '3.0'
+version = '4.0.0-SNAPSHOT'
 
 description = 'Scala OOP-FP pragmatic library for Artificial Intelligence'
 
 
-
 dependencies {
-    generatedCompile 'org.scala-lang:scala-library:2.11.8'
-    generatedCompile 'org.antlr:antlr4-runtime:4.5.3'
-
     compile 'org.scala-lang:scala-library:2.11.8'
     compile 'org.antlr:antlr4-runtime:4.5.3'
 
-    compile 'info.gianlucacosta.omnieditor:omnieditor:5.0'
-    compile 'info.gianlucacosta.helios:helios-fx:5.2'
+    compile 'info.gianlucacosta.omnieditor:omnieditor:6.0.0-SNAPSHOT'
 
     testCompile 'org.scalatest:scalatest_2.11:2.2.6'
     testRuntime 'org.pegdown:pegdown:1.6.0'
 
     antlr 'org.antlr:antlr4:4.5.3'
 }
-
 
 
 aurora {
@@ -61,46 +49,11 @@ aurora {
         email = 'gianluca@gianlucacosta.info'
         url = 'http://gianlucacosta.info/'
     }
-
-    bintray {
-        repo = 'Hephaestus'
-        licenses = ['Apache-2.0']
-        labels = [
-                'Scala',
-                'library',
-                'artificial',
-                'intelligence',
-                'AI',
-                'planning',
-                'logic',
-                'pattern',
-                'matching',
-                'functional',
-                'OOP',
-                'FP'
-        ]
-    }
-}
-
-
-moonLicense {
-    license = apache2
-
-    productInfo {
-        productName = 'LambdaPrism'
-        inceptionYear = 2016
-        copyrightHolder = 'Gianluca Costa'
-    }
-
-
-    includes = includes + [
-            /.*\.g4$/: javaFormat
-    ]
 }
 
 
 generateGrammarSource {
-    outputDirectory = project.file("src/generated/java/info/gianlucacosta/lambdaprism/planning/problem/parser")
+    outputDirectory = project.file("${project.buildDir}/generated/java/info/gianlucacosta/lambdaprism/planning/problem/parser")
     arguments += [
             '-visitor',
             '-long-messages',
@@ -108,6 +61,5 @@ generateGrammarSource {
             '-Werror'
     ]
 }
-generateGrammarSource.dependsOn("cleanGenerated")
 
-generateArtifactInfo.dependsOn("generateGrammarSource")
+compileScala.dependsOn("generateGrammarSource")
