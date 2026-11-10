@@ -37,7 +37,7 @@ LambdaPrism's root package is **info.gianlucacosta.lambdaprism** and contains th
 
   * **ProblemValidators** includes basic validation functions as well as **CompositeValidator**, which executes a list of validators
 
-* **planning.problem.parser**: **ProblemParser** reads a problem from different sources (for now, a Reader and a String). The language for describing a problem is very simple and minimalist - expressed by [this ANTLR grammar](src/main/antlr/PlanningProblem.g4)
+* **planning.problem.parser**: **ProblemParser** reads a problem from different sources (for now, a Reader and a String). The language for describing a problem is very simple and minimalist - expressed by [this ANTLR grammar](src/main/antlr4/PlanningProblem.g4)
 
 * **planning.problem.dialog**: **ProblemDialog** is a ScalaFX dialog employing [OmniEditor](https://github.com/giancosta86/OmniEditor) to ask users to input a planning problem. The most straightforward way to use it is **ProblemDialog.askForProblem()**.
 
